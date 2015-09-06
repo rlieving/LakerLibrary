@@ -124,7 +124,8 @@ $(function () {
             // row object
             row = {};
 
-            tbl.createTitle(team.titleRoster, {"class": "laker_title"});
+            //tbl.createTitle(team.titleRoster, {"class": "laker_title"});
+            tbl.createTitle("test", {"class": "laker_title"});
 
             header.addTd("NAME").addTd("JERSEY", headctr);
             header.addTd("GRADE", headctr).addTd("POSITION", headctr);
