@@ -1,0 +1,8 @@
+{
+  "predef" : ["Laker", "$"],
+  "browser": true,
+  "strict" : true,
+  "globals": {
+    "jQuery": true
+  }
+}

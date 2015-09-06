@@ -2,30 +2,31 @@
 
 $(function () {
 
-    var teamCn = function () {
-        var current = document.URL.toLowerCase(),
-            page = ["freshman", "sophomore", "junior-varsity", "varsity"],
-            teamName;
-
-        $.each(page, function(idx, team) {
-          teamName = team;
-          if (current.indexOf(teamName) > 0) { return false; }
-        });
-
-        return teamName;
-    }(),
-
-    tblTitle = function() {
-
-        var v = {
-            "freshman": "Freshman",
-            "sophomore": "Sophomore",
-            "junior-varsity": "Junior Varsity",
-            "varsity": "Varsity"
-        };
-
-        return v[teamCn];
-    }();
+    var config = [{
+            "cn" : "varsity",
+            "divSched": "#varsity-scores",
+            "divRoster": "#varsity-roster",
+            "titleSched": "2015 Varsity Schedule",
+            "titleRoster": "2015 Varisty Roster"
+        }, {
+          "cn" : "jv",
+          "divSched": "#jv-scores",
+          "divRoster": "#jv-roster",
+          "titleSched": "2015 Junior Varsity Schedule",
+          "titleRoster": "2015 Junior Varisty Roster",
+        }, {
+          "cn": "sophomore",
+          "divSched": "#sophomore-scores",
+          "divRoster": "#sophomore-roster",
+          "titleSched": "2015 Sophomore Schedule",
+          "titleRoster": "2015 Sophomore Roster"
+        }, {
+          "cn" : "freshman",
+          "divSched": "#freshman-scores",
+          "divRoster": "#freshman-roster",
+          "titleSched": "2015 Freshman Schedule",
+          "titleRoster": "2015 Freshman Roster"
+        }];
 
     // return the row class based on even/odd row and highlight
     function rowClass (rowNum, highlight) {
@@ -36,7 +37,7 @@ $(function () {
             return { "class" : c };
     }
 
-    function ApplyCss() {
+    function applyCss() {
         // shortcut to laker styles
         var st = Laker.style,
             center = { "text-align" : "center"},
@@ -54,89 +55,106 @@ $(function () {
         $(".highlight").css(st.highlightRow);
     }
 
-    $.getJSON(Laker.Connection(teamCn, "scores"),
+    function writeSchedule(team) {
 
-        function (data) {
+        $.getJSON(Laker.Connection(team.cn, "scores"),
 
-          // return the string that publishes the game result
-          var gameResult = function (game) {
-            var r = "";
-            if (game.result.length > 0) {
-               r = game.result + "&nbsp;" + game.get("lakerscore") + "-"
-                + game.get("opponentscore");
-            }
-            return r;
-          },
+          function (data) {
 
-          // create a new schedule from the json data
-          sched = new Laker.Schedule(data),
-          // new table object
-          tbl = new Laker.html.Table({"class": "laker_table"}),
-          // new table header object
-          header = tbl.createHeader({}, {"class": "laker_head"}),
-          // row object
-          row = {};
+              // return the string that publishes the game result
+              var gameResult = function (game) {
+                  var r = "";
+                  if (game.result.length > 0) {
+                      r = game.result + "&nbsp;" + game.get("lakerscore");
+                      r += + "-" + game.get("opponentscore");
+                  }
+                  return r;
+              },
 
-          tbl.createTitle("2015 " + tblTitle + " Schedule",
-            {"class": "laker_title"});
+            // create a new schedule from the json data
+            sched = new Laker.Schedule(data),
+            // new table object
+            tbl = new Laker.html.Table({"class": "laker_table"}),
+            // new table header object
+            header = tbl.createHeader({}, {"class": "laker_head"}),
+            // row object
+            row = {};
 
-          // add header columns
-          header.addTd("DATE").addTd("OPPONENT");
-          header.addTd("LOCATION").addTd("RESULT");
+              tbl.createTitle(team.titleSched, {"class": "laker_title"});
 
-          // iterate through each game on the schedule
-          $.each(sched, function(num, game) {
+              // add header columns
+              header.addTd("DATE").addTd("OPPONENT");
+              header.addTd("LOCATION").addTd("RESULT");
 
-            // create a table row with row and td classes
-            row = tbl.createRow(rowClass(num, (game.result === "W")),
-              {"class": "laker_data"});
+              // iterate through each game on the schedule
+              $.each(sched, function (num, game) {
 
-            // add table data to the row
-            row.addTd(game.gamedate).addTd(game.get("opponent"));
-            row.addTd(game.get("gamelocation")).addTd(gameResult(game));
+                  // create a table row with row and td classes
+                  row = tbl.createRow(rowClass(num, (game.result === "W")),
+                    {"class": "laker_data"});
 
-            // add the row to the table
-            tbl.Rows.add(row);
+                  // add table data to the row
+                  row.addTd(game.gamedate).addTd(game.get("opponent"));
+                  row.addTd(game.get("gamelocation")).addTd(gameResult(game));
+
+                  // add the row to the table
+                  tbl.Rows.add(row);
+              });
+
+              // write the scores to the page
+              $(team.divSched).append(tbl.toString());
+
+              applyCss();
           });
 
-          // write the scores to the page
-          $("#" + teamCn + "-scores").append(tbl.toString());
+    }
 
-          ApplyCss();
+    function writeRoster(team) {
+
+      $.getJSON(Laker.Connection(team.cn, "roster"),
+
+          function (data) {
+
+             var team = new Laker.Team(data),
+                 tbl = new Laker.html.Table({ "class" : "laker_table"}),
+            // new table header object
+            header = tbl.createHeader({}, { "class" : "laker_head"}),
+            headctr = { "class" : "laker_head_ctr" },
+            datactr = { "class" : "laker_data_ctr" },
+            // row object
+            row = {};
+
+            tbl.createTitle(team.titleRoster, {"class": "laker_title"});
+
+            header.addTd("NAME").addTd("JERSEY", headctr);
+            header.addTd("GRADE", headctr).addTd("POSITION", headctr);
+
+            $.each(team, function(num, player) {
+                row = tbl.createRow(rowClass(num, player.isCaptain),
+                {"class" : "laker_data"});
+
+                row.addTd(player.fullName).addTd(player.get("number"), datactr);
+                row.addTd(player.get("grade"),datactr);
+                row.addTd(player.get("position"), datactr);
+
+                tbl.Rows.add(row);
+            });
+
+            $(team.divRoster).append(tbl.toString());
+
+            applyCss();
+
+          });
+    }
+
+    $.each(config, function(idx, team) {
+
+        if ($(team.divSched).length) {
+            writeSchedule(team);
+        }
+        if($(team.divRoster).length) {
+            writeRoster(team);
+        }
     });
 
-    $.getJSON(Laker.Connection(teamCn, "roster"),
-
-        function (data) {
-
-           var team = new Laker.Team(data),
-               tbl = new Laker.html.Table({ "class" : "laker_table"}),
-          // new table header object
-          header = tbl.createHeader({}, { "class" : "laker_head"}),
-          headctr = { "class" : "laker_head_ctr" },
-          datactr = { "class" : "laker_data_ctr" },
-          // row object
-          row = {};
-
-          tbl.createTitle(tblTitle + " Roster", {"class": "laker_title"});
-
-          header.addTd("NAME").addTd("JERSEY", headctr);
-          header.addTd("GRADE", headctr).addTd("POSITION", headctr);
-
-          $.each(team, function(num, player) {
-              row = tbl.createRow(rowClass(num, player.isCaptain),
-              {"class" : "laker_data"});
-
-              row.addTd(player.fullName).addTd(player.get("number"), datactr);
-              row.addTd(player.get("grade"),datactr);
-              row.addTd(player.get("position"), datactr);
-
-              tbl.Rows.add(row);
-          });
-
-          $("#" + teamCn +"-roster").append(tbl.toString());
-
-          ApplyCss();
-
-        });
 });
