@@ -150,10 +150,12 @@ $(function () {
 
     $.each(config, function(idx, team) {
 
-        //if ($(team.divSched).length) {
-        //    writeSchedule(team);
-        //}
+        if ($(team.divSched).length) {
+            writeSchedule(team);
+        }
+        alert("searching for" + team.divRoster);
         if($(team.divRoster).length) {
+            alert("found " + team.titleRoster);
             writeRoster(team);
         }
     });
