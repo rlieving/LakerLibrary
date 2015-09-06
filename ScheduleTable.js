@@ -150,9 +150,9 @@ $(function () {
 
     $.each(config, function(idx, team) {
 
-        if ($(team.divSched).length) {
-            writeSchedule(team);
-        }
+        //if ($(team.divSched).length) {
+        //    writeSchedule(team);
+        //}
         if($(team.divRoster).length) {
             writeRoster(team);
         }
