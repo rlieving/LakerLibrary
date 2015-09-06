@@ -1,5 +1,4 @@
-#test_table td {
-
+.schedules_rosters td {
   vertical-align: top;
-  
+  padding: 5px;
 }

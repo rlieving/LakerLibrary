@@ -55,9 +55,9 @@ $(function () {
         $(".highlight").css(st.highlightRow);
     }
 
-    function writeSchedule(team) {
+    function writeSchedule(teamConfig) {
 
-        $.getJSON(Laker.Connection(team.cn, "scores"),
+        $.getJSON(Laker.Connection(teamConfig.cn, "scores"),
 
           function (data) {
 
@@ -80,7 +80,7 @@ $(function () {
             // row object
             row = {};
 
-              tbl.createTitle(team.titleSched, {"class": "laker_title"});
+              tbl.createTitle(teamConfig.titleSched, {"class": "laker_title"});
 
               // add header columns
               header.addTd("DATE").addTd("OPPONENT");
@@ -102,16 +102,16 @@ $(function () {
               });
 
               // write the scores to the page
-              $(team.divSched).append(tbl.toString());
+              $(teamConfig.divSched).append(tbl.toString());
 
               applyCss();
           });
 
     }
 
-    function writeRoster(team) {
+    function writeRoster(teamConfig) {
 
-      $.getJSON(Laker.Connection(team.cn, "roster"),
+      $.getJSON(Laker.Connection(teamConfig.cn, "roster"),
 
           function (data) {
 
@@ -124,8 +124,7 @@ $(function () {
             // row object
             row = {};
 
-            //tbl.createTitle(team.titleRoster, {"class": "laker_title"});
-            tbl.createTitle("test", {"class": "laker_title"});
+            tbl.createTitle(teamConfig.titleRoster, {"class": "laker_title"});
 
             header.addTd("NAME").addTd("JERSEY", headctr);
             header.addTd("GRADE", headctr).addTd("POSITION", headctr);
@@ -141,7 +140,7 @@ $(function () {
                 tbl.Rows.add(row);
             });
 
-            $(team.divRoster).append(tbl.toString());
+            $(teamConfig.divRoster).append(tbl.toString());
 
             applyCss();
 
@@ -153,9 +152,8 @@ $(function () {
         if ($(team.divSched).length) {
             writeSchedule(team);
         }
-        alert("searching for" + team.divRoster);
+
         if($(team.divRoster).length) {
-            alert("found " + team.titleRoster);
             writeRoster(team);
         }
     });
