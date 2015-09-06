@@ -66,7 +66,7 @@ $(function () {
                   var r = "";
                   if (game.result.length > 0) {
                       r = game.result + "&nbsp;" + game.get("lakerscore");
-                      r += + "-" + game.get("opponentscore");
+                      r += "-" + game.get("opponentscore");
                   }
                   return r;
               },
