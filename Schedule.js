@@ -27,8 +27,7 @@ Laker.Schedule = function (data) {
       var d1 = validate(g1.gamedate);
       var d2 = validate(g2.gamedate);
 
-      return d2.subtract(d1).valueOf();
-
+      return d2.valueOf() - d1.valueOf();
     }
 
     $.each(data.feed.entry, function (idx, val) {
