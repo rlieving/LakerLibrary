@@ -2,9 +2,9 @@
 
 /*
     definition: a schedule is an array of games
-    public methods: 
+    public methods:
         * wins: returns int of wins
-        * losses: returns int of losses 
+        * losses: returns int of losses
         * ties: returns int of ties
 */
 Laker.Schedule = function (data) {
@@ -14,6 +14,8 @@ Laker.Schedule = function (data) {
     sched.wins = 0;
     sched.losses = 0;
     sched.ties = 0;
+
+    
 
     $.each(data.feed.entry, function (idx, val) {
 
@@ -33,8 +35,10 @@ Laker.Schedule = function (data) {
             sched.ties += 1;
             break;
         }
+
     });
+
+
 
     return sched;
 };
-
