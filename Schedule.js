@@ -15,7 +15,21 @@ Laker.Schedule = function (data) {
     sched.losses = 0;
     sched.ties = 0;
 
-    
+    function validate(dtString) {
+
+        var d = moment(dtString, "M/D/YYYY");
+
+        return d.isValid() ? d : moment("01-01-1900" ,"MM-DD-YYYY");
+    }
+
+    function gameSort(g1, g2) {
+
+      var d1 = validate(g1.gamedate);
+      var d2 = validate(g2.gamedate);
+
+      return d2.subtract(d1).valueOf();
+
+    }
 
     $.each(data.feed.entry, function (idx, val) {
 
@@ -38,7 +52,7 @@ Laker.Schedule = function (data) {
 
     });
 
-
+    sched.sort(gameSort);
 
     return sched;
 };

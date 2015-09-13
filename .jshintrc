@@ -1,5 +1,5 @@
 {
-  "predef" : ["Laker", "$"],
+  "predef" : ["Laker", "$", "moment"],
   "browser": true,
   "strict" : true,
   "globals": {
