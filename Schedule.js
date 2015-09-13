@@ -43,14 +43,14 @@ Laker.Schedule = function (data) {
             sched.losses += 1;
             break;
 
-        default:
+        case 'T':
             sched.ties += 1;
             break;
         }
 
         if (sched[idx].played) {
-          sched[idx].goalsFor += sched[idx].lscore;
-          sched[idx].goalsAgainst += sched[idx].oscore;
+          sched.goalsFor += sched[idx].lscore;
+          sched.goalsAgainst += sched[idx].oscore;
         }
 
     });
