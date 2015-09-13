@@ -220,5 +220,4 @@ Laker.utility = {
             obj[gCol] = val.split(':')[1].trim();
         });
     }
-
 };
