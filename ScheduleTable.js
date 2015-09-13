@@ -78,6 +78,9 @@ $(function() {
 
           // create a new schedule from the json data
           sched = new Laker.Schedule(data),
+
+          title = teamConfig.titleSched + "&nbsp;[W:{0} | L:{1} | T: {2} | GF: {3} | GA: {4}]",
+
           // new table object
           tbl = new Laker.html.Table({
             "class": "laker_table"
@@ -89,9 +92,11 @@ $(function() {
           // row object
           row = {};
 
-        tbl.createTitle(teamConfig.titleSched, {
-          "class": "laker_title"
-        });
+        title = title.replace("{0}", sched.wins).replace("{1}", sched.losses);
+        title = title.replace("{2}", sched.ties).replace("{3}", sched.goalsFor);
+        title = title.replace("{4}", sched.goalsAgainst);
+
+        tbl.createTitle(title, { "class": "laker_title" });
 
         // add header columns
         header.addTd("DATE").addTd("OPPONENT");
