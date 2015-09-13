@@ -31,7 +31,7 @@ Laker.Schedule = function (data) {
 
     $.each(data.feed.entry, function (idx, val) {
 
-        sched.push(new Laker.Game(validate(val.title.$t), val.content.$t));
+        sched.push(new Laker.Game(validate(val.title.$t).toDate(), val.content.$t));
 
         switch (sched[idx].result) {
 
