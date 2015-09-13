@@ -81,14 +81,14 @@
     }
 
     function getParsingFlags(m) {
-        if (m._pf === null) {
+        if (m._pf == null) {
             m._pf = defaultParsingFlags();
         }
         return m._pf;
     }
 
     function valid__isValid(m) {
-        if (m._isValid === null) {
+        if (m._isValid == null) {
             var flags = getParsingFlags(m);
             m._isValid = !isNaN(m._d.getTime()) &&
                 flags.overflow < 0 &&
@@ -111,7 +111,7 @@
 
     function valid__createInvalid (flags) {
         var m = create_utc__createUTC(NaN);
-        if (flags !== null) {
+        if (flags != null) {
             extend(getParsingFlags(m), flags);
         }
         else {
@@ -175,7 +175,7 @@
     // Moment prototype object
     function Moment(config) {
         copyConfig(this, config);
-        this._d = new Date(config._d !== null ? config._d.getTime() : NaN);
+        this._d = new Date(config._d != null ? config._d.getTime() : NaN);
         // Prevent infinite loop in case updateOffset creates new moment
         // objects.
         if (updateInProgress === false) {
@@ -186,7 +186,7 @@
     }
 
     function isMoment (obj) {
-        return obj instanceof Moment || (obj !== null && obj._isAMomentObject !== null);
+        return obj instanceof Moment || (obj != null && obj._isAMomentObject != null);
     }
 
     function absFloor (number) {
@@ -368,7 +368,7 @@
 
     function makeGetSet (unit, keepTime) {
         return function (value) {
-            if (value !== null) {
+            if (value != null) {
                 get_set__set(this, unit, value);
                 utils_hooks__hooks.updateOffset(this, keepTime);
                 return this;
@@ -625,7 +625,7 @@
     addParseToken(['MMM', 'MMMM'], function (input, array, config, token) {
         var month = config._locale.monthsParse(input, token, config._strict);
         // if we didn't find a month name, mark the date as invalid.
-        if (month !== null) {
+        if (month != null) {
             array[MONTH] = month;
         } else {
             getParsingFlags(config).invalidMonth = input;
@@ -695,7 +695,7 @@
     }
 
     function getSetMonth (value) {
-        if (value !== null) {
+        if (value != null) {
             setMonth(this, value);
             utils_hooks__hooks.updateOffset(this, true);
             return this;
@@ -981,12 +981,12 @@
 
     function getSetWeek (input) {
         var week = this.localeData().week(this);
-        return input === null ? week : this.add((input - week) * 7, 'd');
+        return input == null ? week : this.add((input - week) * 7, 'd');
     }
 
     function getSetISOWeek (input) {
         var week = weekOfYear(this, 1, 4).week;
-        return input === null ? week : this.add((input - week) * 7, 'd');
+        return input == null ? week : this.add((input - week) * 7, 'd');
     }
 
     addFormatToken('DDD', ['DDDD', 3], 'DDDo', 'dayOfYear');
@@ -1012,7 +1012,7 @@
             d += 7;
         }
 
-        weekday = weekday !== null ? 1 * weekday : firstDayOfWeek;
+        weekday = weekday != null ? 1 * weekday : firstDayOfWeek;
 
         dayOfYear = 1 + week1Jan + 7 * (week - 1) - d + weekday;
 
@@ -1026,15 +1026,15 @@
 
     function getSetDayOfYear (input) {
         var dayOfYear = Math.round((this.clone().startOf('day') - this.clone().startOf('year')) / 864e5) + 1;
-        return input === null ? dayOfYear : this.add((input - dayOfYear), 'd');
+        return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
     }
 
     // Pick the first defined of two or three arguments.
     function defaults(a, b, c) {
-        if (a !== null) {
+        if (a != null) {
             return a;
         }
-        if (b !== null) {
+        if (b != null) {
             return b;
         }
         return c;
@@ -1062,7 +1062,7 @@
         currentDate = currentDateArray(config);
 
         //compute day of the year from weeks and weekdays
-        if (config._w && config._a[DATE] === null && config._a[MONTH] === null) {
+        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
             dayOfYearFromWeekInfo(config);
         }
 
@@ -1084,13 +1084,13 @@
         // * if day of month is given, default month and year
         // * if month is given, default only year
         // * if year is given, don't default anything
-        for (i = 0; i < 3 && config._a[i] === null; ++i) {
+        for (i = 0; i < 3 && config._a[i] == null; ++i) {
             config._a[i] = input[i] = currentDate[i];
         }
 
         // Zero out whatever was not defaulted, including time
         for (; i < 7; i++) {
-            config._a[i] = input[i] = (config._a[i] === null) ? (i === 2 ? 1 : 0) : config._a[i];
+            config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
         }
 
         // Check for 24:00:00.000
@@ -1105,7 +1105,7 @@
         config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
         // Apply timezone offset from input. The actual utcOffset can be changed
         // with parseZone.
-        if (config._tzm !== null) {
+        if (config._tzm != null) {
             config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
         }
 
@@ -1118,7 +1118,7 @@
         var w, weekYear, week, weekday, dow, doy, temp;
 
         w = config._w;
-        if (w.GG !== null || w.W !== null || w.E !== null) {
+        if (w.GG != null || w.W != null || w.E != null) {
             dow = 1;
             doy = 4;
 
@@ -1136,13 +1136,13 @@
             weekYear = defaults(w.gg, config._a[YEAR], weekOfYear(local__createLocal(), dow, doy).year);
             week = defaults(w.w, 1);
 
-            if (w.d !== null) {
+            if (w.d != null) {
                 // weekday -- low day numbers are considered next week
                 weekday = w.d;
                 if (weekday < dow) {
                     ++week;
                 }
-            } else if (w.e !== null) {
+            } else if (w.e != null) {
                 // local weekday -- counting starts from begining of week
                 weekday = w.e + dow;
             } else {
@@ -1226,13 +1226,13 @@
     function meridiemFixWrap (locale, hour, meridiem) {
         var isPm;
 
-        if (meridiem === null) {
+        if (meridiem == null) {
             // nothing to do
             return hour;
         }
-        if (locale.meridiemHour !== null) {
+        if (locale.meridiemHour != null) {
             return locale.meridiemHour(hour, meridiem);
-        } else if (locale.isPM !== null) {
+        } else if (locale.isPM != null) {
             // Fallback
             isPm = locale.isPM(meridiem);
             if (isPm && hour < 12) {
@@ -1265,7 +1265,7 @@
         for (i = 0; i < config._f.length; i++) {
             currentScore = 0;
             tempConfig = copyConfig({}, config);
-            if (config._useUTC !== null) {
+            if (config._useUTC != null) {
                 tempConfig._useUTC = config._useUTC;
             }
             tempConfig._f = config._f[i];
@@ -1283,7 +1283,7 @@
 
             getParsingFlags(tempConfig).score = currentScore;
 
-            if (scoreToBeat === null || currentScore < scoreToBeat) {
+            if (scoreToBeat == null || currentScore < scoreToBeat) {
                 scoreToBeat = currentScore;
                 bestMoment = tempConfig;
             }
@@ -1561,7 +1561,7 @@
     function getSetOffset (input, keepLocalTime) {
         var offset = this._offset || 0,
             localAdjust;
-        if (input !== null) {
+        if (input != null) {
             if (typeof input === 'string') {
                 input = offsetFromString(input);
             }
