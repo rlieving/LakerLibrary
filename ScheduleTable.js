@@ -107,7 +107,7 @@ $(function() {
 
           // add table data to the row
           row.addTd(moment(game.gamedate).format('MM/DD/YYYY'));
-          row.addTd(game.get("opponent")).row.addTd(game.get("gamelocation"));
+          row.addTd(game.get("opponent")).addTd(game.get("gamelocation"));
           row.addTd(gameResult(game));
 
           // add the row to the table
