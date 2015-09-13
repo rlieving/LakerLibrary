@@ -14,25 +14,24 @@ Laker.Schedule = function (data) {
     sched.wins = 0;
     sched.losses = 0;
     sched.ties = 0;
+    sched.goalsFor = 0;
+    sched.goalsAgainst = 0;
 
     function validate(dtString) {
 
         var d = moment(dtString, "M/D/YYYY");
 
-        return d.isValid() ? d : moment("01-01-1900" ,"MM-DD-YYYY");
+        return d.isValid() ? d : moment(Laker.utility.defaultDate);
     }
 
     function gameSort(g1, g2) {
 
-      var d1 = validate(g1.gamedate);
-      var d2 = validate(g2.gamedate);
-
-      return d2.valueOf() - d1.valueOf();
+      return g1.gamedate - g2.gamedate;
     }
 
     $.each(data.feed.entry, function (idx, val) {
 
-        sched.push(new Laker.Game(val.title.$t, val.content.$t));
+        sched.push(new Laker.Game(validate(val.title.$t), val.content.$t));
 
         switch (sched[idx].result) {
 
@@ -47,6 +46,11 @@ Laker.Schedule = function (data) {
         default:
             sched.ties += 1;
             break;
+        }
+
+        if (sched[idx].played) {
+          sched[idx].goalsFor += sched[idx].lscore;
+          sched[idx].goalsAgainst += sched[idx].oscore;
         }
 
     });

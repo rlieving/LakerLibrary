@@ -2,7 +2,7 @@
 
 /*
     definition: a game is the lowest unit
-    public methods: 
+    public methods:
         * get(method-name) - gets dynamically appended properties
             and fails silently
         * result: returns W, L or T
@@ -11,34 +11,40 @@ Laker.Game = function (gDate, gString) {
 
     var g = {}, pname;
 
-    g.gamedate = gDate.trim();
+    g.gamedate = gDate;
 
     Laker.utility.applyGoogleRecord(g, gString);
 
     // allows the object to pass back a null string if the
     // property doesn't exist
     g.get = Laker.utility.get;
-    
+    g.lscore = 0;
+    g.oscore = 0;
+
+    g.played = function() {
+
+      g.lscore = parseInt(g.get('lakerscore'), 10);
+      g.oscore = parseInt(g.get('opponentscore'), 10);
+
+      return !isNaN(g.lscore) && !isNaN(g.oscore);
+    }();
+
      // private method to calculate the game result
-    function getResult() {
-        var val = '', ls, os;
+      g.result = function getResult() {
 
-        ls = parseInt(g.get('lakerscore'), 10);
-        os = parseInt(g.get('opponentscore'), 10);
+        var val = '';
 
-        if (!isNaN(ls) && !isNaN(os)) {
-            if (ls > os) {
+        if (g.played) {
+            if (g.lscore > g.oscore) {
                 val = 'W';
-            } else if (ls < os) {
+            } else if (g.lscore < g.oscore) {
                 val = 'L';
             } else {
                 val = 'T';
             }
         }
         return val;
-    }
-
-    g.result = getResult();
+    }();
 
     return g;
 };

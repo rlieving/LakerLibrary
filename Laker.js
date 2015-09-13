@@ -219,5 +219,9 @@ Laker.utility = {
             gCol = val.split(':')[0].trim();
             obj[gCol] = val.split(':')[1].trim();
         });
-    }
+    },
+
+    defaultDate: (function(){
+        return new Date(1900, 1, 1);
+    })()
 };
