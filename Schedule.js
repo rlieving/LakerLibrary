@@ -52,8 +52,7 @@ Laker.Schedule = function(data) {
   });
 
   sched.sort(function(g1, g2) {
-    //return g1.gamedate - g2.gamedate;
-    return g2.gamedate - g1.gamedate;
+    return g1.gamedate - g2.gamedate;
   });
 
   return sched;
