@@ -1,0 +1,32 @@
+.scoreboard {
+  border-collapse: collapse;
+  table-layout: fixed;
+  display: none;
+}
+
+.scoreboard td {
+  border: solid #A9A9A9 1px;
+  padding: 10px 0 10px 0;
+}
+
+.scoreboard .team {
+  background-color: #7E4E99;
+  color: #EEEEEE;
+  font-weight: bold;
+  font-size: 120%;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.scoreboard .label {
+  color: #EEEEEE;
+  background-color: #7E4E99;
+  text-align: center;
+  min-width: 30px;
+}
+
+.scoreboard .stats {
+  text-align: center;
+  background-color: #EEEEEE;
+  color: #7E4E99;
+}
