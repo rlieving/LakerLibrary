@@ -1,3 +1,4 @@
+/*globals Laker */
 'use strict';
 
 /*
@@ -8,7 +9,7 @@
 */
 Laker.Player = function (gData) {
     
-    var p = {}, isCaptain = "";
+    var p = {};
     
     p.firstname = gData.title.$t;
     

@@ -1,3 +1,4 @@
+/*globals Laker */
 'use strict';
 
 /*
@@ -9,7 +10,7 @@
 */
 Laker.Game = function (gDate, gString) {
 
-    var g = {}, pname;
+    var g = {};
 
     g.gamedate = gDate;
 
@@ -29,7 +30,7 @@ Laker.Game = function (gDate, gString) {
       return !isNaN(g.lscore) && !isNaN(g.oscore);
     }();
 
-     // private method to calculate the game result
+     // public method to calculate the game result
       g.result = function getResult() {
 
         var val = '';
