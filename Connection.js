@@ -1,3 +1,4 @@
+/*globals Laker */
 'use strict';
 
 /*
