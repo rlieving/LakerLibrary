@@ -1,3 +1,5 @@
+/*eslint-env jquery */
+/*globals moment Laker*/
 "use strict";
 
 $(function() {
